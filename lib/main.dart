@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quickblox_app/home/home.dart';
 import 'package:quickblox_app/login/login.dart';
 import 'package:quickblox_sdk/quickblox_sdk.dart';
 
