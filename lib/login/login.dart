@@ -13,11 +13,11 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  void _loginToQuickBlox() async {
+  void _loginToQuickBlox(String login, String pass) async {
     QBUser qbUser;
     QBSession qbSession;
     try {
-      QBLoginResult result = await QB.auth.login("alfred", "123456789");
+      QBLoginResult result = await QB.auth.login("$login", "$pass");
       qbUser = result.qbUser;
       qbSession = result.qbSession;
       print(qbSession.tokenExpirationDate);
@@ -34,17 +34,28 @@ class _LoginState extends State<Login> {
     }
   }
 
+  List<LoginModel> lists = [LoginModel(login: "anan", password: "123456789"), LoginModel(login: "alfred", password: "123456789")];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: RaisedButton(
-          child: Text("Login"),
-          onPressed: () async {
-            _loginToQuickBlox();
-          },
-        ),
+      appBar: AppBar(title: Text("Login"),),
+        body: Center(
+      child: ListView.builder(
+        itemCount: lists.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(lists[index].login),
+            onTap: () => _loginToQuickBlox(lists[index].login, lists[index].password),
+          );
+        },
       ),
-    );
+    ));
   }
+}
+
+class LoginModel {
+  final String login;
+  final String password;
+  LoginModel({this.login, this.password});
 }
